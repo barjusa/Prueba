@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/Ejercicio5")
+@WebServlet({"/Ejercicio5","/Ejercicio5/","/Ejercicio5/*"})
 public class Ejercicio5 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
