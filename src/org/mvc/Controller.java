@@ -1,5 +1,6 @@
 package org.mvc;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -26,6 +27,11 @@ public abstract class Controller extends HttpServlet{
 		if(accion.equals("")){
 			accion="index";
 		}
+		if(modo.equals("get")){
+			accion+"GET()";
+		}else if(modo.equals("post")){
+			accion+"Post()";
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -37,12 +43,44 @@ public abstract class Controller extends HttpServlet{
 	}
 
 	protected void view(String rutaAVista) {
-
+		view(rutaAVista,true);
 	}
 
 	protected void view(String rutaADesplegar, boolean estaEnmarcada) {
-		request.getRequestDispatcher("/view/viewController.jsp").forward(request, response);
+		try {
+			request.getRequestDispatcher("/view/viewController.jsp").forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String rutaVista = "/view" + rutaADesplegar;
 		String baseURL = this.baseURL;
+		for (String k : datos.keySet()) {
+			request.setAttribute(k, datos.get(k));
+		}
+		if(estaEnmarcada==false){
+			try {
+				request.getRequestDispatcher(rutaVista).forward(request, response);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			try {
+				request.getRequestDispatcher("/view/_templates/_MASTER.jsp").forward(request, response);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
