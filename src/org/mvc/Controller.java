@@ -28,9 +28,9 @@ public abstract class Controller extends HttpServlet{
 			accion="index";
 		}
 		if(modo.equals("get")){
-			accion+"GET()";
+			accion+="Get";
 		}else if(modo.equals("post")){
-			accion+"Post()";
+			accion+="Post";
 		}
 	}
 
@@ -47,16 +47,8 @@ public abstract class Controller extends HttpServlet{
 	}
 
 	protected void view(String rutaADesplegar, boolean estaEnmarcada) {
-		try {
-			request.getRequestDispatcher("/view/viewController.jsp").forward(request, response);
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String rutaVista = "/view" + rutaADesplegar;
+
+		String rutaVista = "/view/" + rutaADesplegar;
 		String baseURL = this.baseURL;
 		for (String k : datos.keySet()) {
 			request.setAttribute(k, datos.get(k));
