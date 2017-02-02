@@ -28,9 +28,9 @@ public abstract class Controller extends HttpServlet{
 			accion="index";
 		}
 		if(modo.equals("get")){
-			accion+="Get";
+			accion+="Get()";
 		}else if(modo.equals("post")){
-			accion+="Post";
+			accion+="Post()";
 		}
 	}
 
