@@ -1,6 +1,7 @@
 package org.mvc;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -15,7 +16,7 @@ public abstract class Controller extends HttpServlet{
 	protected String baseURL;
 	protected Map<String, Object> datos = new HashMap<>();
 
-	protected void ejecutar(String modo, HttpServletRequest request, HttpServletResponse response) {
+	protected void ejecutar(String modo, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		this.request = request;
 		this.response = response;
 		this.baseURL = request.getRequestURL().toString().substring(0,
@@ -23,22 +24,30 @@ public abstract class Controller extends HttpServlet{
 		+ request.getContextPath() + "/" ;
 		request.setAttribute("baseURL", baseURL);
 		//String controlador= request.getServletPath();
-		String accion = request.getPathInfo(); 
-		if(accion.equals("")){
-			accion="index";
-		}
-		if(modo.equals("get")){
-			accion+="Get";
-		}else if(modo.equals("post")){
-			accion+="Post";
+		String[] partes = request.getPathInfo() != null ? request.getPathInfo().split("/") : null;
+		String accion = (partes != null && partes.length > 0 ? partes[1] : "index")
+				+ (modo.equals("get") ? "Get" : "Post");
+		try {
+			this.getClass().getMethod(accion).invoke(this);
+		} catch (NoSuchMethodException e) {
+			response.setContentType("text/html");
+			response.getWriter().print("<h1>No existe el método " + accion + "</h1>");
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 		}
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		ejecutar("get", request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		ejecutar("post", request, response);
 	}
 

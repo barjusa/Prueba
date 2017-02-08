@@ -10,83 +10,80 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mvc.Controller;
 
-
-@WebServlet({"/t7/ej18","/t7/ej18/","/t7/ej18/*"})
-public class Ej18Controller extends Controller{
-	protected void saludarGet(HttpServletRequest request, HttpServletResponse response){
+@SuppressWarnings("serial")
+@WebServlet({ "/t7/ej18", "/t7/ej18/", "/t7/ej18/*" })
+public class Ej18Controller extends Controller {
+	public void saludarGet() throws IOException {
 		PrintWriter out;
-		try {
-			out = response.getWriter();
-			response.setContentType("text/html");
 
-			out.println("Ejercicio 18 TEMA 7 <br/><br/>" + "<strong>FORMULARIO SALUDAR NOMBRE</strong><br/><br/>");
+		out = response.getWriter();
+		response.setContentType("text/html");
 
-			out.println("<form action=\"\" method=\"post\" >");
-			out.println("<label for=\"idNombre\">Nombre: </label>" + "<input type=\"text\" name=\"nombre\" id=\"idNombre\"> <br/>");
-			out.println("<input type=\"submit\" value=\"Saludar\">");
-			out.println("</form>");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		out.println("Ejercicio 18 TEMA 7 <br/><br/>" + "<strong>FORMULARIO SALUDAR NOMBRE</strong><br/><br/>");
+
+		out.println("<form action=\"" + this.baseURL + "t7/ej18/saludar\" method=\"post\" >");
+		out.println("<label for=\"idNombre\">Nombre: </label>"
+				+ "<input type=\"text\" name=\"nombre\" id=\"idNombre\"> <br/>");
+		out.println("<input type=\"submit\" value=\"Saludar\">");
+		out.println("</form>");
+
 	}
-	protected void saludarPost(HttpServletRequest request, HttpServletResponse response){
-		PrintWriter out;
-		String nombre = request.getParameter("nombre");
-		try {
-			out = response.getWriter();
-			response.setContentType("text/html");
 
-			out.println("Ejercicio 18 TEMA 7 <br/><br/>" + "<strong>SALUDAR NOMBRE</strong><br/><br/>");
-			
-			out.println("Hola "+nombre+" !!!<br/>");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	protected void despedirseGet(HttpServletRequest request, HttpServletResponse response){
-		PrintWriter out;
-		try {
-			out = response.getWriter();
-			response.setContentType("text/html");
-
-			out.println("Ejercicio 18 TEMA 7 <br/><br/>" + "<strong>FORMULARIO SALUDAR NOMBRE</strong><br/><br/>");
-
-			out.println("<form action=\"\" method=\"post\" >");
-			out.println("<label for=\"idNombre\">Nombre: </label>" + "<input type=\"text\" name=\"nombre\" id=\"idNombre\"> <br/>");
-			out.println("<input type=\"submit\" value=\"Saludar\">");
-			out.println("</form>");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	protected void despedirsePost(HttpServletRequest request, HttpServletResponse response){
+	public void saludarPost() throws IOException {
 		PrintWriter out;
 		String nombre = request.getParameter("nombre");
-		try {
-			out = response.getWriter();
-			response.setContentType("text/html");
 
-			out.println("Ejercicio 18 TEMA 7 <br/><br/>" + "<strong>DESPEDIR NOMBRE</strong><br/><br/>");
-			
-			out.println("Adiós "+nombre+" !!!<br/>");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-	
-		saludarGet(request, response);
-		
-		
-	}
+		out = response.getWriter();
+		response.setContentType("text/html");
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		
-		saludarPost(request,  response);
+		out.println("Ejercicio 18 TEMA 7 <br/><br/>" + "<strong>SALUDAR NOMBRE</strong><br/><br/>");
+
+		out.println("Hola " + nombre + " !!!<br/>");
 
 	}
+
+	protected void despedirseGet() throws IOException {
+		PrintWriter out;
+
+		out = response.getWriter();
+		response.setContentType("text/html");
+
+		out.println("Ejercicio 19 TEMA 7 <br/><br/>" + "<strong>FORMULARIO SALUDAR NOMBRE</strong><br/><br/>");
+
+		out.println("<form action=\""+this.baseURL+"t7/ej18/despedirse\" method=\"post\" >");
+		out.println("<label for=\"idNombre\">Nombre: </label>"
+				+ "<input type=\"text\" name=\"nombre\" id=\"idNombre\"> <br/>");
+		out.println("<input type=\"submit\" value=\"Saludar\">");
+		out.println("</form>");
+
+	}
+
+	protected void despedirsePost() throws IOException {
+		PrintWriter out;
+		String nombre = request.getParameter("nombre");
+
+		out = response.getWriter();
+		response.setContentType("text/html");
+
+		out.println("Ejercicio 19 TEMA 7 <br/><br/>" + "<strong>DESPEDIR NOMBRE</strong><br/><br/>");
+
+		out.println("Adiós " + nombre + " !!!<br/>");
+
+	}
+	/*
+	 * protected void doGet(HttpServletRequest request, HttpServletResponse
+	 * response) {
+	 * 
+	 * saludarGet(request, response);
+	 * 
+	 * 
+	 * }
+	 * 
+	 * protected void doPost(HttpServletRequest request, HttpServletResponse
+	 * response) {
+	 * 
+	 * saludarPost(request, response);
+	 * 
+	 * }
+	 */
 }
