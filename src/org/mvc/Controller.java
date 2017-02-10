@@ -58,6 +58,7 @@ public abstract class Controller extends HttpServlet{
 	protected void view(String rutaADesplegar, boolean estaEnmarcada) {
 
 		String rutaVista = "/view/" + rutaADesplegar;
+		request.setAttribute("rutaVista", rutaVista);
 		String baseURL = this.baseURL;
 		for (String k : datos.keySet()) {
 			request.setAttribute(k, datos.get(k));
