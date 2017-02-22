@@ -2,13 +2,16 @@ package org.mvc;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public abstract class Controller extends HttpServlet{
 	protected HttpServletRequest request;
@@ -63,6 +66,14 @@ public abstract class Controller extends HttpServlet{
 		for (String k : datos.keySet()) {
 			request.setAttribute(k, datos.get(k));
 		}
+		
+		HttpSession ss= request.getSession(true);
+		for (String k : Collections.list(ss.getAttributeNames())) {
+			request.setAttribute(k, ss.getAttribute(k));
+		}
+		
+		
+		
 		if(estaEnmarcada==false){
 			try {
 				request.getRequestDispatcher(rutaVista).forward(request, response);
